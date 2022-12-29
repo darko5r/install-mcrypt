@@ -24,8 +24,14 @@ fi
 
 # Check if mcrypt.so is installed in /usr/lib/php/modules
 if [ ! -f "/usr/lib/php/modules/mcrypt.so" ]; then
-  # Install mcrypt.so with yaourt
-  yaourt -S php-mcrypt
+  # Ask if the user wants to install mcrypt.so
+  read -p "mcrypt.so is missing or mcrypt is not installed. Do you want to install it? [y/n] " answer
+  if [ "$answer" == "y" ]; then
+    # Install mcrypt.so with yaourt
+    yaourt -S php-mcrypt
+  else
+    exit 0
+  fi
 else
   # Check PHP version
   PHP_MAJOR_VERSION=$("$PHP" -r 'echo PHP_MAJOR_VERSION;')
